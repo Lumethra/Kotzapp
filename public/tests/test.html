@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <style>
+        body, html {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #chat {
+            position: relative;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        .animated-background {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .background-selector {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .preview-thumbnail {
+            width: 160px;
+            height: 90px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .preview-thumbnail:hover {
+            transform: scale(1.05);
+            border-color: #fff;
+        }
+
+        #mainBackground {
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat">
+        <div class="animated-background">
+            <iframe id="mainBackground" 
+                src="https://www.youtube.com/embed/mKCieTImjvU?autoplay=1&mute=1&controls=0&showinfo=0&loop=1&playlist=mKCieTImjvU"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <div class="background-selector">
+            <div class="preview-thumbnail" data-video-id="mKCieTImjvU">
+                <iframe width="160" height="90"
+                    src="https://www.youtube.com/embed/mKCieTImjvU?autoplay=1&mute=1"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+                    frameborder="0">
+                </iframe>
+            </div>
+            <div class="preview-thumbnail" data-video-id="tNkZsRW7h2c">
+                <iframe width="160" height="90"
+                    src="https://www.youtube.com/embed/tNkZsRW7h2c?autoplay=1&mute=1"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+                    frameborder="0">
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const previews = document.querySelectorAll('.preview-thumbnail');
+        const mainBackground = document.getElementById('mainBackground');
+
+        previews.forEach(preview => {
+            preview.addEventListener('click', () => {
+                const videoId = preview.dataset.videoId;
+                mainBackground.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&showinfo=0&loop=1&playlist=${videoId}`;
+            });
+        });
+    </script>
+</body>
+</html>

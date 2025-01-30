@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://cdn.glitch.global/05a0f658-73c9-4927-9816-926caba90f4c/IMG_0843.jpeg?v=1729152770176"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <title>Christmas</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: black;
+        color: white;
+        transition: background-color 1s;
+        overflow: hidden;
+      }
+
+      #countdown {
+        font-size: 48px;
+        margin-top: 50px;
+        animation: zoomInOut 1s infinite;
+      }
+
+      #easterEgg {
+        margin-top: 10px;
+        font-size: 18px;
+      }
+
+      .firework,
+      .confetti,
+      .particle {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      @keyframes wobble {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-10px); }
+        50% { transform: translateX(10px); }
+        75% { transform: translateX(-5px); }
+      }
+
+      #surpriseCharacter {
+        display: none;
+        font-size: 36px;
+        animation: bounce 1s infinite;
+      }
+
+      #balloon-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 9999;
+      }
+
+      .balloon {
+        position: fixed;
+        bottom: -50px;
+        border-radius: 50%;
+        z-index: 10;
+        opacity: 0;
+      }
+
+      .string {
+        position: absolute;
+        bottom: -50px;
+        left: 50%;
+        width: 2px;
+        height: 50px;
+        background: gray;
+        transform: translateX(-50%);
+      }
+
+      @keyframes floatUp {
+        0% { transform: translateY(0); opacity: 1; }
+        50% { opacity: 0.6; transform: translateY(-635%); }
+        100% { transform: translateY(-100vh); opacity: 0; }
+      }
+
+      .star {
+        position: fixed;
+        background-color: white;
+        border-radius: 50%;
+        animation: twinkle 2s infinite ease-in-out;
+      }
+
+      @keyframes twinkle {
+        0%, 100% { opacity: 0; }
+        50% { opacity: 1; }
+      }
+
+      @keyframes zoomInOut {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+      }
+
+      canvas {
+        will-change: transform;
+        image-rendering: -webkit-optimize-contrast;
+      }
+    </style>
+  </head>
+
+  <body>
+    <a
+      href="/index.html"
+      style="position: absolute; color: white; z-index: 100000000"
+    >
+      <span
+        class="material-icons"
+        style="position: fixed; top: 0; right: 0; margin: 20px"
+        >home</span
+      >
+    </a>
+    <a
+      href="#"
+      style="position: absolute; color: white; z-index: 100000000"
+      id="backBtn"
+    >
+      <span
+        class="material-icons"
+        style="position: fixed; top: 0; left: 0; margin: 20px"
+        >arrow_back</span
+      >
+    </a>
+    <div id="countdown"></div>
+    <div id="easterEgg"></div>
+    <div id="surpriseCharacter">🎅</div>
+    <div id="balloon-container"></div>
+
+    <script>
+      const targetDate = new Date("2024-12-24T20:00:00");
+      const countdownElem = document.getElementById("countdown");
+      const easterEggElem = document.getElementById("easterEgg");
+      const surpriseCharacterElem = document.getElementById("surpriseCharacter");
+
+      let fireworkCanvas = document.createElement("canvas");
+      fireworkCanvas.classList.add("firework");
+      document.body.appendChild(fireworkCanvas);
+
+      let confettiCanvas = document.createElement("canvas");
+      confettiCanvas.classList.add("confetti");
+      document.body.appendChild(confettiCanvas);
+
+      let particleCanvas = document.createElement("canvas");
+      particleCanvas.classList.add("particle");
+      document.body.appendChild(particleCanvas);
+
+      let fireworkCtx = fireworkCanvas.getContext("2d");
+      let confettiCtx = confettiCanvas.getContext("2d");
+      let particleCtx = particleCanvas.getContext("2d");
+
+      fireworkCanvas.width = confettiCanvas.width = particleCanvas.width = window.innerWidth;
+      fireworkCanvas.height = confettiCanvas.height = particleCanvas.height = window.innerHeight;
+
+      let fireworks = [];
+      let confetti = [];
+      let particles = [];
+
+      function updateTimer() {
+        const now = new Date();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+          countdownElem.innerHTML = "🎄 Merry Christmas! 🎄";
+          launchBigFireworks();
+          randomBackgroundColor();
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        countdownElem.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+        if (now.getMinutes() === 0 && now.getSeconds() === 0) {
+          launchFireworks();
+          randomBackgroundColor();
+        }
+
+        if (Math.random() < 0.02) {
+          showSurpriseCharacter();
+        }
+
+        if (Math.random() < 0.05) {
+          launchConfetti();
+        }
+
+        if (Math.random() < 0.01) {
+          randomBackgroundColor();
+        }
+
+        if (Math.random() < 0.01) {
+          showEasterEgg();
+        }
+
+        if (Math.random() < 0.05) {
+          wobbleCountdown();
+        }
+
+        if (Math.random() < 0.04) {
+          launchParticles();
+        }
+      }
+
+      function showEasterEgg() {
+        const messages = ["🎁 Unwrap the magic!", "🎅 Santa is watching!", "✨ Christmas cheer here!"];
+        easterEggElem.innerHTML = messages[Math.floor(Math.random() * messages.length)];
+        easterEggElem.style.display = "block";
+        setTimeout(() => {
+          easterEggElem.style.display = "none";
+        }, 3000);
+      }
+
+      function randomBackgroundColor() {
+        const colors = ["#D72638", "#3A6EA5", "#F8E16C", "#2ECC71", "#FFFFFF"];
+        document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      }
+
+      function launchFireworks() {
+        for (let i = 0; i < 10; i++) {
+          fireworks.push(new Firework());
+        }
+      }
+
+      function launchBigFireworks() {
+        for (let i = 0; i < 50; i++) {
+          fireworks.push(new Firework(true));
+        }
+      }
+
+      function Firework(isBig = false) {
+        this.x = Math.random() * fireworkCanvas.width;
+        this.y = Math.random() * fireworkCanvas.height;
+        this.size = Math.random() * (isBig ? 12 : 6) + 4;
+        this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        this.opacity = Math.random() * 0.5 + 0.5;
+        this.speed = Math.random() * (isBig ? 6 : 3) + 3;
+        this.direction = Math.random() * Math.PI * 2;
+        this.velocityX = Math.cos(this.direction) * this.speed;
+        this.velocityY = Math.sin(this.direction) * this.speed;
+      }
+
+      Firework.prototype.update = function () {
+        this.x += this.velocityX;
+        this.y += this.velocityY;
+
+        fireworkCtx.beginPath();
+        fireworkCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        fireworkCtx.fillStyle = this.color;
+        fireworkCtx.fill();
+        fireworkCtx.globalAlpha = this.opacity;
+
+        this.opacity *= 0.98;
+        this.size *= 0.98;
+      };
+
+      setInterval(updateTimer, 1000);
+
+      function animate() {
+        fireworkCtx.clearRect(0, 0, fireworkCanvas.width, fireworkCanvas.height);
+        for (let i = 0; i < fireworks.length; i++) {
+          fireworks[i].update();
+          if (fireworks[i].opacity < 0.1 || fireworks[i].size < 1) {
+            fireworks.splice(i, 1);
+            i--;
+          }
+        }
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematik-Helfer (9. Klasse)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        select, input, button {
+            margin: 5px 0;
+            padding: 5px;
+        }
+        .output {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mathematik-Helfer für die 9. Klasse</h1>
+    <p>Wähle ein Thema aus:</p>
+
+    <!-- Dropdown zur Auswahl eines Themas -->
+    <select id="topic" onchange="loadForm()">
+        <option value="">--- Thema auswählen ---</option>
+        <option value="linearFunction">Lineare Funktionen</option>
+        <option value="quadraticFunction">Quadratische Funktionen</option>
+        <option value="pythagoras">Satz des Pythagoras</option>
+        <option value="trigonometry">Trigonometrie</option>
+        <option value="statistics">Statistik</option>
+    </select>
+
+    <!-- Dynamischer Bereich für das Formular -->
+    <div id="formContainer"></div>
+
+    <!-- Ergebnisse -->
+    <div class="output" id="output"></div>
+
+    <script>
+        // Funktion zum Laden der passenden Eingabemaske
+        function loadForm() {
+            const topic = document.getElementById('topic').value;
+            const formContainer = document.getElementById('formContainer');
+            formContainer.innerHTML = ""; // Reset
+
+            switch (topic) {
+                case "linearFunction":
+                    formContainer.innerHTML = `
+                        <h2>Lineare Funktion: y = m * x + b</h2>
+                        <label>Steigung (m):</label>
+                        <input type="number" id="m" step="any"><br>
+                        <label>y-Achsenabschnitt (b):</label>
+                        <input type="number" id="b" step="any"><br>
+                        <label>x-Wert:</label>
+                        <input type="number" id="x" step="any"><br>
+                        <button onclick="solveLinearFunction()">Berechnen</button>
+                    `;
+                    break;
+
+                case "quadraticFunction":
+                    formContainer.innerHTML = `
+                        <h2>Quadratische Funktion: y = ax² + bx + c</h2>
+                        <label>a:</label>
+                        <input type="number" id="a" step="any"><br>
+                        <label>b:</label>
+                        <input type="number" id="b" step="any"><br>
+                        <label>c:</label>
+                        <input type="number" id="c" step="any"><br>
+                        <label>x-Wert:</label>
+                        <input type="number" id="x" step="any"><br>
+                        <button onclick="solveQuadraticFunction()">Berechnen</button>
+                    `;
+                    break;
+
+                case "pythagoras":
+                    formContainer.innerHTML = `
+                        <h2>Satz des Pythagoras: a² + b² = c²</h2>
+                        <label>Kathete a:</label>
+                        <input type="number" id="a" step="any"><br>
+                        <label>Kathete b:</label>
+                        <input type="number" id="b" step="any"><br>
+                        <button onclick="solvePythagoras()">Hypotenuse berechnen</button>
+                    `;
+                    break;
+
+                case "trigonometry":
+                    formContainer.innerHTML = `
+                        <h2>Trigonometrie</h2>
+                        <label>Ankathete:</label>
+                        <input type="number" id="adjacent" step="any"><br>
+                        <label>Gegenkathete:</label>
+                        <input type="number" id="opposite" step="any"><br>
+                        <button onclick="solveTrig()">Tangens berechnen</button>
+                    `;
+                    break;
+
+                case "statistics":
+                    formContainer.innerHTML = `
+                        <h2>Statistik</h2>
+                        <label>Zahlen (durch Komma trennen):</label>
+                        <input type="text" id="numbers"><br>
+                        <button onclick="solveStatistics()">Mittelwert berechnen</button>
+                    `;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        // Lineare Funktion berechnen
+        function solveLinearFunction() {
+            const m = parseFloat(document.getElementById('m').value);
+            const b = parseFloat(document.getElementById('b').value);
+            const x = parseFloat(document.getElementById('x').value);
+            const y = m * x + b;
+            document.getElementById('output').innerText = `Ergebnis: y = ${y.toFixed(2)}`;
+        }
+
+        // Quadratische Funktion berechnen
+        function solveQuadraticFunction() {
+            const a = parseFloat(document.getElementById('a').value);
+            const b = parseFloat(document.getElementById('b').value);
+            const c = parseFloat(document.getElementById('c').value);
+            const x = parseFloat(document.getElementById('x').value);
+            const y = a * x ** 2 + b * x + c;
+            document.getElementById('output').innerText = `Ergebnis: y = ${y.toFixed(2)}`;
+        }
+
+        // Satz des Pythagoras
+        function solvePythagoras() {
+            const a = parseFloat(document.getElementById('a').value);
+            const b = parseFloat(document.getElementById('b').value);
+            const c = Math.sqrt(a ** 2 + b ** 2);
+            document.getElementById('output').innerText = `Hypotenuse: c = ${c.toFixed(2)}`;
+        }
+
+        // Trigonometrie: Tangens berechnen
+        function solveTrig() {
+            const adjacent = parseFloat(document.getElementById('adjacent').value);
+            const opposite = parseFloat(document.getElementById('opposite').value);
+            const tan = opposite / adjacent;
+            document.getElementById('output').innerText = `Tangens: tan = ${tan.toFixed(2)}`;
+        }
+
+        // Statistik: Mittelwert berechnen
+        function solveStatistics() {
+            const numbers = document.getElementById('numbers').value.split(',').map(Number);
+            const sum = numbers.reduce((a, b) => a + b, 0);
+            const mean = sum / numbers.length;
+            document.getElementById('output').innerText = `Mittelwert: ${mean.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

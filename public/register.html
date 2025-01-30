@@ -1,0 +1,294 @@
+<!-- register.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register Page</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://cdn.glitch.global/05a0f658-73c9-4927-9816-926caba90f4c/IMG_0843.jpeg?v=1729152770176"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Quicksand", sans-serif;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #000;
+        overflow: hidden; /* Prevents overflow from the scrolling effect */
+      }
+
+      /* Background grid pattern */
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+            to right,
+            #0f0 0px,
+            #0f0 1px,
+            transparent 1px,
+            transparent 50px
+          ),
+          repeating-linear-gradient(
+            to bottom,
+            #0f0 0px,
+            #0f0 1px,
+            transparent 1px,
+            transparent 50px
+          );
+        opacity: 0.2;
+        z-index: -1;
+      }
+
+      .login-container {
+        position: relative;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 40px;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 0px 0px 20px 2px rgba(0, 255, 0, 0.5);
+        z-index: 1; /* Ensure the login container is above the animated background */
+      }
+
+      h2 {
+        font-size: 2em;
+        color: #0f0;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      .input-group {
+        margin-bottom: 20px;
+        width: 100%;
+      }
+
+      .input-group input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #4d4d4d;
+        border-radius: 5px;
+        background: #222;
+        color: #fff;
+      }
+
+      .input-group input:focus {
+        border-color: #00ff00;
+        outline: none;
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 10px;
+        background: #0f0;
+        color: #000;
+        font-size: 1.2em;
+        font-weight: bold;
+        text-transform: uppercase;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .submit-btn:hover {
+        background: #00b300;
+      }
+
+      .forgot-password {
+        margin-top: 10px;
+      }
+
+      .forgot-password a {
+        color: #0f0;
+        text-decoration: none;
+      }
+
+      .forgot-password a:hover {
+        text-decoration: underline;
+      }
+
+      /* Scrolling line effect */
+      .scrolling-line {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        animation: scroll 10s linear infinite;
+      }
+
+      .square {
+        width: 80px; /* Fixed width */
+        height: 80px; /* Fixed height to maintain square shape */
+        background: rgba(0, 255, 0, 0.1);
+        margin: 2px; /* Margin between squares */
+        box-shadow: 0px 0px 15px 5px rgba(0, 255, 0, 0.2);
+        animation: spin 3s linear infinite; /* Spinning effect */
+      }
+
+      @keyframes scroll {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(100vh); /* Scroll down to bottom */
+        }
+        100% {
+          transform: translateY(0); /* Scroll back up */
+        }
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @media (max-width: 600px) {
+        .login-container {
+          width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scrolling-line" id="scrollingLine"></div>
+
+    <div class="login-container">
+      <h2>Register</h2>
+      <form id="registerForm">
+        <div class="input-group">
+          <input
+            type="text"
+            id="registerUsername"
+            name="username"
+            placeholder="Username"
+            required
+            maxlength="12"
+          />
+        </div>
+        <div class="input-group">
+          <input
+            type="password"
+            id="registerPassword"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <input
+            style="display: none"
+            type="user"
+            id="user"
+            name="user"
+            value="user"
+            disabled
+          />
+        </div>
+        <button type="submit" class="submit-btn">Register</button>
+        <div class="forgot-password">
+          <a href="login.html">Already have an account? Login here</a>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      const scrollingLine = document.getElementById("scrollingLine");
+
+      function createSquares() {
+        const squareSize = 82; // 80px for the square + 2px margin
+        const numberOfSquares = Math.floor(window.innerWidth / squareSize); // Calculate how many squares fit in the viewport
+        scrollingLine.innerHTML = ""; // Clear existing squares
+
+        for (let i = 0; i < numberOfSquares; i++) {
+          // Create squares to fill the width
+          const square = document.createElement("div");
+          square.classList.add("square");
+          scrollingLine.appendChild(square);
+        }
+      }
+
+      // Recreate squares on window resize
+      window.addEventListener("resize", createSquares);
+
+      // Initial square creation
+      createSquares();
+
+      const registerForm = document.getElementById("registerForm");
+
+      registerForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const username = document.getElementById("registerUsername").value;
+        const password = document.getElementById("registerPassword").value;
+        const role = document.getElementById("user").value;
+
+        try {
+          const response = await fetch("/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password, role }),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            alert("Registration successful! Please log in.");
+            window.location.href = "/login.html";
+          } else {
+            alert(result.message || "Registration failed");
+          }
+        } catch (error) {
+          console.error("Error during registration:", error);
+          alert("An error occurred while registering. Please try again later.");
+        }
+      });
+      
+      function decryptData(encryptedData) {
+        try {
+          // Basic validation check
+          if (!encryptedData || typeof encryptedData !== "string") {
+            return null;
+          }
+          return JSON.parse(atob(encryptedData)); // Decode from base64, then parse JSON
+        } catch (error) {
+          return null;
+        }
+      }
+      window.onload = () => {
+        if (decryptData(sessionStorage.getItem("role")) === "banned") {
+          window.location.href = "/banned.html";
+        }
+      };
+      if (decryptData(sessionStorage.getItem("role")) === "banned") {
+          window.location.href = "/banned.html";
+        }
+    </script>
+  </body>
+</html>

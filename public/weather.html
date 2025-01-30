@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://cdn.glitch.global/05a0f658-73c9-4927-9816-926caba90f4c/IMG_0843.jpeg?v=1729152770176"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Segoe-UI, Helvetica, sans-serif;
+        background-color: hsl(0, 0%, 95%);
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        background-color: #222831;
+        padding: 20px;
+        position: relative; /* For positioning squares */
+      }
+      #container {
+        max-width: fit-content;
+        margin: 0 40px 0 0;
+      }
+      #weatherContainer {
+        max-width: calc(fit-content + 10px);
+      }
+      #weather-nav {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        padding: 8px 0 8px 0;
+        width: 100%;
+        background-color: rgb(247, 245, 245);
+        border-radius: 15px;
+        justify-content: center;
+        font-weight: bolder;
+        font-size: 2em;
+      }
+      .weatherForm {
+        margin-top: 20px;
+        background-color: rgb(247, 245, 245);
+        text-align: center;
+        max-width: fit-content;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 5px 5px 15px hsla(0, 0%, 0%, 0.3);
+      }
+
+      .cityInput {
+        padding: 10px;
+        font-size: 2rem;
+        font-weight: bold;
+        border: 2px solid hsla(0, 0%, 20%, 0.3);
+        border-radius: 10px;
+        width: calc(100% - 25px);
+      }
+
+      button[type="submit"] {
+        padding: 10px 20px;
+        font-weight: bold;
+        font-size: 2rem;
+        background-color: hsl(122, 39%, 50%);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+      }
+
+      button[type="submit"]:hover {
+        background-color: hsl(122, 39%, 40%);
+      }
+
+      .card {
+        background: linear-gradient(
+          180deg,
+          hsl(210, 100%, 75%),
+          hsl(40, 100%, 75%)
+        );
+        padding: 50px;
+        border-radius: 10px;
+        box-shadow: 2px 2px 5px hsla(0, 0%, 0%, 0.5);
+        min-width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 40px 0 0 0;
+      }
+
+      h1 {
+        font-size: 3.5rem;
+        margin-top: 0;
+        margin-bottom: 25px;
+      }
+
+      p {
+        font-size: 1.5rem;
+        margin: 5px 0;
+      }
+
+      .cityDisplay,
+      .tempDisplay {
+        font-size: 3.5rem;
+        font-weight: bold;
+        color: hsla(0, 0%, 0%, 0.75);
+        margin-bottom: 25px;
+      }
+
+      .humidityDisplay {
+        font-weight: bold;
+        margin-bottom: 25px;
+      }
+
+      .descDisplay {
+        font-style: italic;
+        font-weight: bold;
+        font-size: 2rem;
+      }
+
+      .weatherEmoji {
+        margin: 0;
+        font-size: 7.5rem;
+      }
+
+      .errorDisplay {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: hsla(0, 0%, 0%, 0.75);
+      }
+      .square {
+        width: 80px;
+        height: 80px;
+        background: rgba(0, 255, 0, 0.1);
+        margin: 2px;
+        box-shadow: 0px 0px 15px 5px rgba(0, 255, 0, 0.2);
+        position: fixed; /* Make squares absolute for random placement */
+        animation: spin 3s linear infinite;
+        z-index: -1;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      /* Scrollbar Styling */
+      body::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      body::-webkit-scrollbar-track {
+        background: none;
+      }
+
+      body::-webkit-scrollbar-thumb {
+        background: darkgray;
+        border-radius: 50px;
+      }
+
+      body::-webkit-scrollbar-thumb:hover {
+        background: black;
+      }
+      .material-icons {
+        font-size: 28px;
+        transition: color 0.3s;
+      }
+      .material-icons:hover {
+        color: #25d366;
+      }
+    </style>
+  </head>
+
+  <body>
+    <a
+      href="/index.html"
+      style="position: absolute; color: white; z-index: 100000000"
+    >
+      <span
+        class="material-icons"
+        style="position: fixed; top: 0; right: 0; margin: 20px"
+        >home</span
+      >
+    </a>
+    <a
+      href="#"
+      style="position: absolute; color: white; z-index: 100000000"
+      id="backBtn"
+    >
+      <span
+        class="material-icons"
+        style="position: fixed; top: 0; left: 0; margin: 20px"
+        >arrow_back</span
+      >
+    </a>
+
+    <div id="container">
+      <div id="weather-nav">
+        <span id="weather-icon" class="material-symbols-outlined"></span>
+        <span id="temperature" style="padding: 5px"></span>
+      </div>
+
+      <form class="weatherForm">
+        <div id="weatherContainer">
+          <input
+            type="text"
+            class="cityInput"
+            placeholder="Enter city"
+          /><br /><br />
+          <button type="submit">Get Weather</button>
+          <div class="card" style="display: none"></div>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      function decryptData(encryptedData) {
+        try {
+          // Basic validation check
+          if (!encryptedData || typeof encryptedData !== "string") {
+            throw new Error("Invalid encrypted data format");
+          }
+          return JSON.parse(atob(encryptedData)); // Decode from base64, then parse JSON
+        } catch (error) {
+          console.error("Error decrypting data:", error);
+          return null;
+        }
+      }
+
+      const role = decryptData(sessionStorage.getItem("role")); // Get the role from sessionStorage
+      window.onload = () => {
+        if (role === "banned") {
+          window.location.href = "/banned.html";
+        }
+      };
+      if (role === "banned") {
+        window.location.href = "/banned.html";
+      }
+
+      const numberOfSquares = 30; // Total number of squares
+      const squares = [];
+
+      // Create squares dynamically and position them randomly
+      function createSquares() {
+        const scrollingLine = document.body; // Use body as the container for squares
+        for (let i = 0; i < numberOfSquares; i++) {
+          const square = document.createElement("div");
+          square.classList.add("square");
+          positionSquare(square);
+          scrollingLine.appendChild(square);
+          squares.push(square); // Store reference to each square
+        }
+      }
+
+      // Position a square at a random location within the viewport
+      function positionSquare(square) {
+        const viewportHeight = window.innerHeight;
+        const viewportWidth = window.innerWidth;
+
+        // Calculate random position, ensuring the square is fully visible
+        const randomX = Math.random() * (viewportWidth - 80); // 80 is the width of the square
+        const randomY = Math.random() * (viewportHeight - 80); // 80 is the height of the square
+
+        square.style.left = `${randomX}px`;
+        square.style.top = `${randomY}px`;
+      }
+
+      createSquares();
+
+      document
+        .getElementById("backBtn")
+        .addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent the default anchor behavior
+          window.history.back(); // Go back to the last visited page
+        });
+
+      const weatherForm = document.querySelector(".weatherForm");
+      const cityInput = document.querySelector(".cityInput");
+      const card = document.querySelector(".card");
+      const apiKey = "9364665231eab5cbf637281bf9144d05";
+
+      weatherForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const city = cityInput.value;
+
+        if (city) {
+          try {
+            const weatherData = await getWeatherData(city);
+            displayWeatherInfo(weatherData);
+            cityInput.value = "";
+          } catch (error) {
+            console.log(error);
+            displayError(error);
+          }
+        } else {
+          displayError("Please enter a city");
+        }
+      });
+
+      async function getWeatherData(city) {
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+
+        const response = await fetch(apiUrl);
+
+        if (!response.ok) {
+          throw new Error("Could not find city, check your spelling!");
+        }
+
+        return await response.json();
+      }
+
+      function displayWeatherInfo(data) {
+        const {
+          name: city,
+          main: { temp, humidity },
+          weather: [{ description, id }],
+        } = data;
+
+        card.textContent = "";
+        card.style.display = "flex";
+
+        const cityDisplay = document.createElement("h1");
+        const tempDisplay = document.createElement("p");
+        const humidityDisplay = document.createElement("p");
+        const descDisplay = document.createElement("p");
+        const weatherEmoji = document.createElement("p");
+
+        cityDisplay.textContent = city;
+        tempDisplay.textContent = `${(temp - 273.15).toFixed(1)}°C`;
+        humidityDisplay.textContent = `Humidity: ${humidity}%`;
+        descDisplay.textContent = description;
+        weatherEmoji.textContent = getWeatherEmoji(id);
+
+        cityDisplay.classList.add("cityDisplay");
+        tempDisplay.classList.add("tempDisplay");
+        humidityDisplay.classList.add("humidityDisplay");
+        descDisplay.classList.add("descDisplay");
+        weatherEmoji.classList.add("weatherEmoji");
+
+        card.appendChild(cityDisplay);
+        card.appendChild(tempDisplay);
+        card.appendChild(humidityDisplay);
+        card.appendChild(descDisplay);
+        card.appendChild(weatherEmoji);
+      }
+
+      function getWeatherEmoji(weatherId) {
+        switch (true) {
+          case weatherId >= 200 && weatherId < 300:
+            return "⛈️";
+          case weatherId >= 300 && weatherId < 400:
+            return "🌧️";
+          case weatherId >= 500 && weatherId < 600:
+            return "🌧️";
+          case weatherId >= 600 && weatherId < 700:
+            return "🌨️";
+          case weatherId >= 700 && weatherId < 800:
+            return "🌫️";
+          case weatherId === 800:
+            return "☀️";
+          case weatherId >= 801 && weatherId < 810:
+            return "☁️";
+          default:
+            return "❓";
+        }
+      }
+
+      function displayError(message) {
+        const errorDisplay = document.createElement("p");
+        errorDisplay.textContent = message;
+        errorDisplay.classList.add("errorDisplay");
+
+        card.textContent = "";
+        card.style.display = "flex";
+        card.appendChild(errorDisplay);
+      }
+
+      const apiKeyStLeon = "e2666a0a839646bcccb73532e09a3689";
+      const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?zip=68789,de&appid=${apiKeyStLeon}&units=metric`;
+
+      const weatherIcons = {
+        Thunderstorm: "thunderstorm",
+        Drizzle: "cloudy_snowing",
+        Rain: "rainy",
+        Snow: "ac_unit",
+        Mist: "foggy",
+        Smoke: "smog",
+        Haze: "haze",
+        Dust: "foggy",
+        Fog: "foggy",
+        Sand: "foggy",
+        Ash: "cloud",
+        Squall: "thunderstorm",
+        Tornado: "hurricane",
+        Clear: "clear_day",
+        Clouds: "cloud",
+      };
+
+      async function fetchWeather() {
+        const response = await fetch(weatherUrl);
+        const data = await response.json();
+        const temp = document.getElementById("temperature");
+        const icon = document.getElementById("weather-icon");
+
+        temp.textContent = `${data.main.temp}°C in St. Leon-Rot`;
+        const weatherMain = data.weather[0].main;
+        icon.textContent = weatherIcons[weatherMain] || "cloud";
+      }
+
+      fetchWeather();
+      setInterval(fetchWeather, 600000);
+    </script>
+  </body>
+</html>

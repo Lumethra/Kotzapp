@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://cdn.glitch.global/05a0f658-73c9-4927-9816-926caba90f4c/IMG_0843.jpeg?v=1729152770176"
+    />
+    <title>Countdown</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: black;
+        color: white;
+        transition: background-color 1s;
+      }
+      #countdown {
+        font-size: 48px;
+        margin-top: 50px;
+        z-index: 1000000000000;
+      }
+      #easterEgg {
+        display: none;
+        font-size: 24px;
+        color: yellow;
+        margin-top: 20px;
+      }
+      #spiralCanvas,
+      .firework,
+      .confetti,
+      .particle {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 1;
+      }
+      @keyframes wobble {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-10px);
+        }
+        50% {
+          transform: translateX(10px);
+        }
+        75% {
+          transform: translateX(-5px);
+        }
+      }
+      #surpriseCharacter {
+        display: none;
+        font-size: 36px;
+        animation: bounce 1s infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <a
+      href="/index.html"
+      style="position: absolute; color: white; z-index: 100000000"
+    >
+      <span
+        class="material-icons"
+        style="position: fixed; top: 0; right: 0; margin: 20px"
+        >home</span
+      >
+    </a>
+    <a
+      href="#"
+      style="position: absolute; color: white; z-index: 100000000"
+      id="backBtn"
+    >
+      <span
+        class="material-icons"
+        style="position: fixed; top: 0; left: 0; margin: 20px"
+        >arrow_back</span
+      >
+    </a>
+
+    <div id="countdown"></div>
+    <div id="easterEgg"></div>
+    <canvas id="spiralCanvas" class="spiral"></canvas>
+    <canvas id="fireworksCanvas" class="firework"></canvas>
+    <canvas id="confettiCanvas" class="confetti"></canvas>
+    <canvas id="particleCanvas" class="particle"></canvas>
+    <div id="surpriseCharacter">🎉</div>
+
+    <script>
+      document
+        .getElementById("backBtn")
+        .addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent the default anchor behavior
+          window.history.back(); // Go back to the last visited page
+        });
+
+      // Timer settings
+      let targetHour = 16;
+      let countdownElem = document.getElementById("countdown");
+      let easterEggElem = document.getElementById("easterEgg");
+      let surpriseCharacterElem = document.getElementById("surpriseCharacter");
+      let spiralCanvas = document.getElementById("spiralCanvas");
+      let fireworkCanvas = document.getElementById("fireworksCanvas");
+      let confettiCanvas = document.getElementById("confettiCanvas");
+      let particleCanvas = document.getElementById("particleCanvas");
+      let spiralCtx = spiralCanvas.getContext("2d");
+      let fireworkCtx = fireworkCanvas.getContext("2d");
+      let confettiCtx = confettiCanvas.getContext("2d");
+      let particleCtx = particleCanvas.getContext("2d");
+      fireworkCanvas.width =
+        confettiCanvas.width =
+        particleCanvas.width =
+        spiralCanvas.width =
+          window.innerWidth;
+      fireworkCanvas.height =
+        confettiCanvas.height =
+        particleCanvas.height =
+        spiralCanvas.height =
+          window.innerHeight;
+
+      // Countdown logic
+      function updateTimer() {
+        let now = new Date();
+        let targetTime = new Date(now);
+        targetTime.setHours(targetHour, 0, 0, 0);
+
+        if (now >= targetTime) {
+          targetTime.setDate(now.getDate() + 1); // Set to tomorrow after 16:00
+        }
+
+        let diff = targetTime - now;
+        let hours = Math.floor(
+          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        countdownElem.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+
+        // Firework effect every hour
+        if (now.getMinutes() === 0 && now.getSeconds() === 0) {
+          launchFireworks();
+          randomBackgroundColor();
+        }
+
+        // Big fireworks at the end
+        if (hours === 0 && minutes === 0 && seconds === 0) {
+          launchBigFireworks();
+          randomBackgroundColor();
+        }
+
+        // Random surprise character
+        if (Math.random() < 0.02) {
+          showSurpriseCharacter();
+        }
+
+        // Random confetti burst
+        if (Math.random() < 0.05) {
+          launchConfetti();
+        }
+
+        // Random background color change at random times
+        if (Math.random() < 0.01) {
+          randomBackgroundColor();
+        }
+
+        // Random Easter Egg display
+        if (Math.random() < 0.01) {
+          showEasterEgg();
+        }
+
+        // Random wobbling effect on countdown text
+        if (Math.random() < 0.05) {
+          wobbleCountdown();
+        }
+
+        // Random spiral shapes
+        if (Math.random() < 0.03) {
+          launchSpiralShapes();
+        }
+
+        // Random particle effect
+        if (Math.random() < 0.04) {
+          launchParticles();
+        }
+
+        // Random screen shake effect
+        if (Math.random() < 0.02) {
+          shakeScreen();
+        }
+
+        // Text explosion effect
+        if (Math.random() < 0.03) {
+          textExplosion();
+        }
+      }
+
+      // Function to show Easter Egg
+      function showEasterEgg() {
+        let easterEggs = [
+          "You found a hidden egg!",
+          "Surprise!",
+          "Easter egg unlocked!",
+          "Shh, it's a secret!",
+        ];
+        let randomEgg =
+          easterEggs[Math.floor(Math.random() * easterEggs.length)];
+        easterEggElem.innerHTML = randomEgg;
+        easterEggElem.style.display = "block";
+        setTimeout(() => {
+          easterEggElem.style.display = "none";
+        }, 3000);
+      }
+
+      // Random background color
+      function randomBackgroundColor() {
+        let colors = ["#ff4757", "#1e90ff", "#2ed573", "#ffa502", "#70a1ff"];
+        let randomColor = colors[Math.floor(Math.random() * colors.length)];
+        document.body.style.backgroundColor = randomColor;
+      }
+
+      // Fireworks logic
+      function launchFireworks() {
+        drawFirework("small");
+      }
+
+      function launchBigFireworks() {
+        drawFirework("big");
+      }
+
+      function drawFirework(size) {
+        fireworkCtx.clearRect(
+          0,
+          0,
+          fireworkCanvas.width,
+          fireworkCanvas.height
+        );
+        let fireworkCount = size === "big" ? 50 : 10;
+        for (let i = 0; i < fireworkCount; i++) {
+          createFirework();
+        }
+      }
+
+      function createFirework() {
+        let x = Math.random() * fireworkCanvas.width;
+        let y = Math.random() * fireworkCanvas.height;
+        let radius = Math.random() * 3 + 1;
+        let color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+
+        fireworkCtx.beginPath();
+        fireworkCtx.arc(x, y, radius, 0, Math.PI * 2, false);
+        fireworkCtx.fillStyle = color;
+        fireworkCtx.fill();
+      }
+
+      // Confetti logic
+      function launchConfetti() {
+        drawConfetti();
+      }
+
+      function drawConfetti() {
+        confettiCtx.clearRect(
+          0,
+          0,
+          confettiCanvas.width,
+          confettiCanvas.height
+        );
+        for (let i = 0; i < 50; i++) {
+          createConfetti();
+        }
+      }
+
+      function createConfetti() {
+        let x = Math.random() * confettiCanvas.width;
+        let y = Math.random() * confettiCanvas.height;
+        let size = Math.random() * 10 + 5;
+        let color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+
+        confettiCtx.fillStyle = color;
+        confettiCtx.fillRect(x, y, size, size);
+      }
+
+      // Surprise character
+      function showSurpriseCharacter() {
+        surpriseCharacterElem.style.display = "block";
+        setTimeout(() => {
+          surpriseCharacterElem.style.display = "none";
+        }, 3000);
+      }
+
+      // Spiral shapes logic
+      function launchSpiralShapes() {
+        spiralCtx.clearRect(0, 0, spiralCanvas.width, spiralCanvas.height);
+        for (let i = 0; i < 20; i++) {
+          createSpiralShape();
+        }
+      }
+
+      function createSpiralShape() {
+        let x = spiralCanvas.width / 2;
+        let y = spiralCanvas.height / 2;
+        let radius = Math.random() * 30 + 10;
+        let angle = Math.random() * 2 * Math.PI;
+        let color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+
+        spiralCtx.strokeStyle = color;
+        spiralCtx.beginPath();
+        for (let i = 0; i < 100; i++) {
+          let spiralX = x + radius * Math.cos(angle);
+          let spiralY = y + radius * Math.sin(angle);
+          spiralCtx.lineTo(spiralX, spiralY);
+          radius += 0.5;
+          angle += 0.1;
+        }
+        spiralCtx.stroke();
+      }
+
+      // Particle effect logic
+      function launchParticles() {
+        drawParticles();
+      }
+
+      function drawParticles() {
+        particleCtx.clearRect(
+          0,
+          0,
+          particleCanvas.width,
+          particleCanvas.height
+        );
+        for (let i = 0; i < 100; i++) {
+          createParticle();
+        }
+      }
+
+      function createParticle() {
+        let x = Math.random() * particleCanvas.width;
+        let y = Math.random() * particleCanvas.height;
+        let size = Math.random() * 3 + 1;
+        let color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+
+        particleCtx.fillStyle = color;
+        particleCtx.beginPath();
+        particleCtx.arc(x, y, size, 0, Math.PI * 2);
+        particleCtx.fill();
+      }
+
+      // Screen shake effect
+      function shakeScreen() {
+        let intensity = 5;
+        let body = document.body;
+        let originalStyle = body.style.transform;
+        body.style.transform = `translate(${Math.random() * intensity}px, ${
+          Math.random() * intensity
+        }px)`;
+        setTimeout(() => {
+          body.style.transform = originalStyle;
+        }, 100);
+      }
+
+      // Text explosion
+      function textExplosion() {
+        let text = countdownElem.innerHTML;
+        countdownElem.innerHTML = "";
+        let explosionFragment = document.createDocumentFragment();
+        text.split("").forEach((char, index) => {
+          let span = document.createElement("span");
+          span.innerHTML = char;
+          span.style.position = "relative";
+          span.style.display = "inline-block";
+          span.style.transform = `translate(${Math.random() * 100 - 50}px, ${
+            Math.random() * 100 - 50
+          }px)`;
+          span.style.opacity = "0";
+          explosionFragment.appendChild(span);
+          setTimeout(() => {
+            span.style.transform = "translate(0, 0)";
+            span.style.opacity = "1";
+          }, 100 * index);
+        });
+        countdownElem.appendChild(explosionFragment);
+      }
+
+      // Wobble countdown effect
+      function wobbleCountdown() {
+        countdownElem.style.animation = "wobble 0.5s";
+        setTimeout(() => {
+          countdownElem.style.animation = "";
+        }, 500);
+      }
+
+      // Start the timer
+      setInterval(updateTimer, 1000);
+    </script>
+  </body>
+</html>

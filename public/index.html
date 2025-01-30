@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kotzapp</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://cdn.glitch.global/05a0f658-73c9-4927-9816-926caba90f4c/IMG_0843.jpeg?v=1729152770176"
+    />
+    <link rel="stylesheet" href="loadingScreen.css" />
+    <link rel="stylesheet" href="style.css" />
+    <!-- Include Material Symbols -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+  </head>
+  <body>
+    <div style="display: none">
+      <input type="checkbox" id="AuthJS" />
+      <input type="checkbox" id="CountdownJS" />
+      <input type="checkbox" id="ScriptJS" />
+      <input type="checkbox" id="ThemeJS" />
+    </div>
+
+    <div id="loading">
+      <div>
+        <span class="loader">Load&nbsp;ng</span><span class="loader1"></span>
+      </div>
+    </div>
+
+    <div id="tooltip" class="tooltip"></div>
+    <!-- Navbar Section -->
+    <nav>
+      <ul>
+        <p id="clock" data-tooltip="Current Time" class="nav-time"></p>
+        <li class="icon-container">
+          <a href="profile.html" class="icon" data-tooltip="Profile">
+            <span class="material-symbols-outlined">person</span>
+          </a>
+          <a href="#" class="settings icon" data-tooltip="Settings">
+            <span class="material-symbols-outlined">settings</span>
+          </a>
+          <a
+            href="admin.html"
+            id="adminLink"
+            class="icon adminLink"
+            data-tooltip="Admin"
+          >
+            <span class="material-symbols-outlined">manage_accounts</span>
+          </a>
+          <a href="weather.html" class="icon" data-tooltip="Weather">
+            <span class="material-symbols-outlined">rainy</span>
+          </a>
+          <a href="about.html" class="icon" data-tooltip="About">
+            <span class="material-symbols-outlined">info</span>
+          </a>
+          <a href="calculator.html" class="icon" data-tooltip="Calculator">
+            <span class="material-symbols-outlined">calculate</span>
+          </a>
+          <a
+            href="#"
+            class="settings icon"
+            data-tooltip="More"
+            onclick="toggleMobileMenu()"
+          >
+            <span class="material-symbols-outlined">widgets</span>
+          </a>
+          <a
+            href="login.html"
+            class="icon"
+            data-tooltip="Logout"
+            onclick="sessionStorage.clear();"
+          >
+            <span class="material-symbols-outlined">logout</span>
+          </a>
+        </li>
+        <p id="count" data-tooltip="Time till «Schule-Aus»" class="nav-time">
+          XXh XXm XXs
+        </p>
+      </ul>
+    </nav>
+    <div id="mobile-nav">
+      <button id="menuButton" class="menu-button" onclick="toggleMobileMenu()">
+        MENU
+      </button>
+    </div>
+
+    <div class="mobile-menu">
+      <a href="profile.html" class="icon icon-mobile" data-tooltip="Profile">
+        <span class="material-symbols-outlined">person</span>
+        <div style="margin: 10px">Profile</div>
+      </a>
+      <a
+        href="christmas.html"
+        class="icon icon-mobile"
+        data-tooltip="Christmas"
+      >
+        <span class="material-symbols-outlined">ac_unit</span>
+        <div style="margin: 10px">Christmas</div>
+      </a>
+      <a href="#" class="icon icon-mobile settings" data-tooltip="Settings">
+        <span class="material-symbols-outlined">settings</span>
+        <div style="margin: 10px">Settings</div>
+      </a>
+      
+      <a
+        href="admin.html"
+        id="adminLinkMobile"
+        class="icon adminLink icon-mobile"
+        data-tooltip="Admin"
+      >
+        <span class="material-symbols-outlined">manage_accounts</span>
+        <div style="margin: 10px">Admin</div>
+      </a>
+      <a href="weather.html" class="icon icon-mobile" data-tooltip="Weather">
+        <span class="material-symbols-outlined">rainy</span>
+        <div style="margin: 10px">Weather</div>
+      </a>
+      <a href="about.html" class="icon icon-mobile" data-tooltip="About">
+        <span class="material-symbols-outlined">info</span>
+        <div style="margin: 10px">About</div>
+      </a>
+      <a
+        href="calculator.html"
+        class="icon icon-mobile"
+        data-tooltip="Calculator"
+      >
+        <span class="material-symbols-outlined">calculate</span>
+        <div style="margin: 10px">Calculator</div>
+      </a>
+      <a href="login.html" class="icon icon-mobile" data-tooltip="Logout">
+        <span class="material-symbols-outlined">logout</span>
+        <div style="margin: 10px" onclick="sessionStorage.clear();">Logout</div>
+      </a>
+    </div>
+
+    <div id="statuslobby" data-tooltip="Rejoin?">-- XXXXXXX --</div>
+    <div id="status" data-tooltip="Online Users">-- XXXXXXXXXXXX --</div>
+
+    <div id="leftPanel">
+      <div id="settings-container" class="settings-container">
+        <input id="burger-settings" type="checkbox" style="display: none" />
+
+        <label for="burger-settings">
+          <div id="span-container-settings">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </label>
+        <h2>Settings</h2>
+        <br />
+        <div class="input-group">
+          <label id="themesel">Theme:</label>
+          <select id="theme">
+            <option value="DarkMode">Dark Mode</option>
+            <option value="LightMode">Light Mode</option> 
+          </select>
+        </div>
+        <div class="input-group">
+          <input type="checkbox" id="randomBackground" checked />
+          <label for="randomBackground">Random Background</label>
+        </div>
+        <div id="background-selector" style="display: none"></div>
+        <div class="input-group">
+          <input type="checkbox" id="notifications" checked />
+          <label for="notifications">Enable Notifications</label>
+        </div>
+        <div class="input-group">
+          <input type="checkbox" id="autoJoin" />
+          <label for="autoJoin">Auto Join Lobby Onload</label>
+        </div>
+        <div class="owner-settings" style="display: none">
+          <div class="input-group">
+            <input type="checkbox" id="hideOwner" checked />
+            <label for="hideOwner">Vanish</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div id="anotherContainer">
+      <div id="completeChat">
+        <input id="burgerHelper" type="checkbox" style="display: none" />
+        <div id="main-container">
+          <div class="toggle-switch">
+            <input
+              type="checkbox"
+              id="alwaysOnCheckbox"
+              class="toggle-checkbox"
+            />
+            <label for="alwaysOnCheckbox" class="toggle-label"></label>
+          </div>
+          <div id="statusText"></div>
+
+          <div id="chat-container">
+            <input id="burger" type="checkbox" style="display: none" />
+            <label for="burger" id="burgerLabel">
+              <div id="span-container">
+                <span
+                  class="material-icons arrowBack"
+                  style="
+                    mix-blend-mode: difference;
+                    top: 0;
+                    left: 0;
+                    position: absolute;
+                  "
+                  >arrow_back</span
+                >
+                <span
+                  class="material-icons arrowForward"
+                  style="
+                    mix-blend-mode: difference;
+                    top: 0;
+                    left: 0;
+                    position: absolute;
+                  "
+                  >arrow_forward</span
+                >
+              </div>
+            </label>
+            <div id="currentUserDisplay">-- Writing as: XXXXX --</div>
+            <div id="chat"></div>
+
+            <div id="moreMenu" class="more-menu" style="display: none">
+              <div id="lobbyOwnerSelection">
+                <button onclick="inviteMember()">Invite Member To Lobby</button>
+                <button onclick="removeMember()">
+                  Remove Member From lobby</button
+                ><br />
+                <button onclick="deleteLobby()">Delete Lobby</button>
+              </div>
+            </div>
+
+            <div id="lobby-selection" class="lobby-selection">
+              <ul id="lobby-list">
+                <li>
+                  <a
+                    href="#"
+                    class="lobby-option"
+                    data-lobby="Public"
+                    data-tooltip="Public"
+                    >Public</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="selected-message-container"></div>
+          </div>
+        </div>
+
+        <div id="MessageSend">
+          <input
+            type="file"
+            id="imageInput"
+            accept="image/*"
+            style="display: none"
+          />
+          <button type="button" id="sendImage">
+            <span class="material-symbols-outlined"> attach_file </span>
+          </button>
+
+          <input id="message" type="text" placeholder="Enter message" />
+          <button type="button" id="send">
+            <span class="material-symbols-outlined"> send </span>
+          </button>
+        </div>
+      </div>
+      <div id="messageMenu" class="message-menu">
+        <div class="menu-option" id="pinMessage">Pin Message</div>
+        <div class="menu-option" id="replyMessage">Reply Message</div>
+        <div class="menu-option" id="editMessage">Edit Message</div>
+        <div class="menu-option" id="deleteMessage">Delete Message</div>
+      </div>
+    </div>
+
+    <div id="rulesBackground">
+      <div class="rules-container">
+        <div class="rulesContent"></div>
+        <p id="kickCountdown"></p>
+      </div>
+    </div>
+
+    <div id="lobbyMenu" class="modal">
+      <div class="modal-content">
+        <!-- Close Button with Material Icon -->
+        <span class="material-symbols-outlined close-modal">close</span>
+        <h2>Create a New Lobby</h2>
+        <input
+          type="text"
+          id="lobbyNameInput"
+          class="lobby-input"
+          placeholder="Enter lobby name..."
+        />
+        <div class="password-toggle">
+          <input type="checkbox" id="enablePassword" />
+          <label for="enablePassword">Require Password</label>
+        </div>
+        <input
+          type="password"
+          id="lobbyPasswordInput"
+          class="lobby-input"
+          placeholder="Enter password..."
+          style="display: none"
+        />
+        <button type="submit" id="createLobbySubmit" class="create-button">
+          <span class="material-symbols-outlined">check</span>
+          Create Lobby
+        </button>
+      </div>
+    </div>
+
+    <script src="indexJsFiles/auth.js"></script>
+    <script src="indexJsFiles/theme.js"></script>
+    <script src="indexJsFiles/script.js"></script>
+    <script src="indexJsFiles/countdown.js"></script>
+    <script src="indexJsFiles/kicked.js"></script>
+    <script src="indexJsFiles/christmasMode.js"></script>
+    <script src="indexJsFiles/loadingScreen.js"></script>
+
+    <!-- imports -->
+  </body>
+</html>

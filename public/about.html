@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us</title>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://cdn.glitch.global/05a0f658-73c9-4927-9816-926caba90f4c/IMG_0843.jpeg?v=1729152770176"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #1a1a1a;
+        color: #ffffff;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+      }
+      h2 {
+        color: #00b300;
+        text-align: center;
+      }
+      .content {
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+      a {
+        color: #00b300;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .material-icons {
+        font-size: 28px;
+        transition: color 0.3s;
+      }
+      .material-icons:hover {
+        color: #25d366;
+      }
+
+      .copyright {
+        font-size: 14px;
+        max-height: 30px;
+        line-height: 30px;
+        color: #fff;
+        text-align: center;
+        width: 100%;
+        margin-top: 30px;
+        bottom: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <a
+      href="/index.html"
+      style="position: absolute; color: white; z-index: 100000000"
+    >
+      <span
+        class="material-icons"
+        style="position: fixed; top: 0; right: 0; margin: 20px"
+        >home</span
+      >
+    </a>
+    <a
+      href="#"
+      style="position: absolute; color: white; z-index: 100000000"
+      id="backBtn"
+    >
+      <span
+        class="material-icons"
+        style="position: fixed; top: 0; left: 0; margin: 20px"
+        >arrow_back</span
+      >
+    </a>
+    <div class="content">
+      <h2>About Our Chat Application</h2>
+      <p>
+        This chat application allows users to communicate in real time. You can
+        create an account, log in, and join chat rooms to interact with others.
+      </p>
+      <h3>Key Features:</h3>
+      <ul>
+        <li>Real-time messaging</li>
+        <li>User authentication and account management</li>
+        <li>Secure password handling</li>
+        <li>Responsive design for mobile and desktop</li>
+        <li>Can be getting banned by disregarding our <a href="rules.html">Rules</a></li>
+      </ul>
+      <h3>Credits:</h3>
+      <p>Developed by Nico, Maximilian and Leon (Team Loewenrot).</p>
+      <p>
+        For more information, visit our
+        <a href="https://github.com/Team-Loewenrot/" target="_blank">GitHub</a>.
+      </p>
+      <p>
+        Or contact us via E-mail:
+        <a href="mailto:kotzapp@outlook.com">kotzapp@outlook.com</a>
+      </p>
+    </div>
+
+    <div class="copyright">Copyright © Kotzapp 2024</div>
+    <script>
+      function decryptData(encryptedData) {
+        try {
+          // Basic validation check
+          if (!encryptedData || typeof encryptedData !== "string") {
+            throw new Error("Invalid encrypted data format");
+          }
+          return JSON.parse(atob(encryptedData)); // Decode from base64, then parse JSON
+        } catch (error) {
+          console.error("Error decrypting data:", error);
+          return null;
+        }
+      }
+
+      const username = decryptData(sessionStorage.getItem("username"));
+      const role = decryptData(sessionStorage.getItem("role")); // Get the role from sessionStorage
+      if (!username) {
+        window.location.href = "/login.html";
+      }
+
+      window.onload = () => {
+        if (role === "banned") {
+          window.location.href = "/banned.html";
+        }
+      };
+      if (role === "banned") {
+        window.location.href = "/banned.html";
+      }
+      document
+        .getElementById("backBtn")
+        .addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent the default anchor behavior
+          window.history.back(); // Go back to the last visited page
+        });
+    </script>
+  </body>
+</html>

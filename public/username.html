@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://cdn.glitch.global/05a0f658-73c9-4927-9816-926caba90f4c/IMG_0843.jpeg?v=1729152770176"
+    />
+    <title>User Profile</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "Quicksand", sans-serif;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #000;
+        overflow: hidden;
+      }
+
+      /* Background grid pattern */
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+            to right,
+            #0f0 0px,
+            #0f0 1px,
+            transparent 1px,
+            transparent 50px
+          ),
+          repeating-linear-gradient(
+            to bottom,
+            #0f0 0px,
+            #0f0 1px,
+            transparent 1px,
+            transparent 50px
+          );
+        opacity: 0.2;
+        z-index: -1;
+      }
+
+      .profile-container {
+        position: relative;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 40px;
+        width: 100%;
+        max-width: 400px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 20px 2px rgba(0, 255, 0, 0.5);
+        z-index: 1;
+      }
+
+      h2 {
+        font-size: 2em;
+        color: #0f0;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-align: center;
+      }
+
+      .input-group {
+        margin-bottom: 20px;
+        width: 100%;
+      }
+
+      label {
+        color: #fff;
+      }
+
+      .input-group input {
+        width: calc(100% - 23px);
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #4d4d4d;
+        border-radius: 5px;
+        background: #222;
+        color: #fff;
+      }
+
+      .input-group input:focus {
+        border-color: #00ff00;
+        outline: none;
+      }
+      .submit-btn,
+      .delete-btn {
+        width: 100%;
+        padding: 10px;
+        background-color: #00b300;
+        color: #000;
+        font-size: 1.2em;
+        font-weight: bold;
+        text-transform: uppercase;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .submit-btn:hover {
+        background: #00b300;
+      }
+      .submit-btn:hover {
+        background-color: #009900;
+      }
+      .delete-btn {
+        background-color: #ff3333;
+        color: #fff;
+      }
+      .delete-btn:hover {
+        background-color: #cc0000;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+      .material-icons {
+        font-size: 28px;
+        transition: color 0.3s;
+      }
+      .material-icons:hover {
+        color: #25d366;
+      }
+      .scrolling-line {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        animation: scroll 10s linear infinite;
+      }
+
+      .square {
+        width: 80px; /* Fixed width */
+        height: 80px; /* Fixed height to maintain square shape */
+        background: rgba(0, 255, 0, 0.1);
+        margin: 2px; /* Margin between squares */
+        box-shadow: 0px 0px 15px 5px rgba(0, 255, 0, 0.2);
+        animation: spin 3s linear infinite; /* Spinning effect */
+      }
+
+      @keyframes scroll {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(100vh); /* Scroll down to bottom */
+        }
+        100% {
+          transform: translateY(0); /* Scroll back up */
+        }
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scrolling-line" id="scrollingLine"></div>
+    <a
+      href="/index.html"
+      style="position: absolute; color: white; z-index: 100000000"
+    >
+      <span
+        class="material-icons"
+        style="position: fixed; top: 0; right: 0; margin: 20px"
+        >home</span
+      > </a
+    ><br />
+    <a
+      href="#"
+      style="position: absolute; color: white; z-index: 100000000"
+      id="backBtn"
+    >
+      <span
+        class="material-icons"
+        style="position: fixed; top: 0; left: 0; margin: 20px"
+        >arrow_back</span
+      >
+    </a>
+    <div class="profile-container">
+      <h2>User Profile</h2>
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="profileUsername"
+          name="username"
+          value=""
+          disabled
+        />
+      </div>
+
+      <!-- Change Username Form -->
+      <div class="input-group">
+        <label for="newUsername">New Username</label>
+        <input
+          type="text"
+          id="newUsername"
+          name="newUsername"
+          placeholder="New Username"
+          required
+          maxlength="12"
+        />
+      </div>
+      <div class="input-group">
+        <label for="passwordForUsername">Password</label>
+        <input
+          type="password"
+          id="passwordForUsername"
+          name="passwordForUsername"
+          placeholder="Password"
+          required
+        />
+      </div>
+      <button type="button" class="submit-btn" id="changeUsernameBtn">
+        Change Username</button
+      ><br /><br />
+
+      <button type="button" class="delete-btn" id="deleteAccountBtn">
+        Delete Account
+      </button>
+      <div
+        id="message"
+        style="color: #ffcc00; text-align: center; margin-top: 10px"
+      ></div>
+    </div>
+
+    <script>
+      function decryptData(encryptedData) {
+        try {
+          // Basic validation check
+          if (!encryptedData || typeof encryptedData !== "string") {
+            throw new Error("Invalid encrypted data format");
+          }
+          return JSON.parse(atob(encryptedData)); // Decode from base64, then parse JSON
+        } catch (error) {
+          console.error("Error decrypting data:", error);
+          return null;
+        }
+      }
+
+      const username = decryptData(sessionStorage.getItem("username"));
+      const role = decryptData(sessionStorage.getItem("role")); // Get the role from sessionStorage
+      if (!username) {
+        window.location.href = "/login.html";
+      }
+
+      window.onload = () => {
+        if (role === "banned") {
+          window.location.href = "/banned.html";
+        }
+      };
+      if (role === "banned") {
+        window.location.href = "/banned.html";
+      }
+      document
+        .getElementById("backBtn")
+        .addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent the default anchor behavior
+          window.history.back(); // Go back to the last visited page
+        });
+
+      const scrollingLine = document.getElementById("scrollingLine");
+
+      function createSquares() {
+        const squareSize = 82; // 80px for the square + 2px margin
+        const numberOfSquares = Math.floor(window.innerWidth / squareSize); // Calculate how many squares fit in the viewport
+        scrollingLine.innerHTML = ""; // Clear existing squares
+
+        for (let i = 0; i < numberOfSquares; i++) {
+          // Create squares to fill the width
+          const square = document.createElement("div");
+          square.classList.add("square");
+          scrollingLine.appendChild(square);
+        }
+      }
+
+      // Recreate squares on window resize
+      window.addEventListener("resize", createSquares);
+
+      // Initial square creation
+      createSquares();
+
+      const usernameField = document.getElementById("profileUsername");
+      const changeUsernameBtn = document.getElementById("changeUsernameBtn");
+      const deleteAccountBtn = document.getElementById("deleteAccountBtn");
+      const messageDiv = document.getElementById("message");
+
+      // Set the username from session storage
+      usernameField.value = decryptData(sessionStorage.getItem("username"));
+
+      // Change Username
+      changeUsernameBtn.addEventListener("click", async () => {
+        const newUsername = document.getElementById("newUsername").value;
+        const passwordForUsername = document.getElementById(
+          "passwordForUsername"
+        ).value;
+
+        if (!newUsername || !passwordForUsername) {
+          messageDiv.innerText = "Please fill in both fields!";
+          return;
+        }
+
+        try {
+          const response = await fetch("/change-username", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              currentUsername: usernameField.value,
+              newUsername,
+              password: passwordForUsername,
+            }),
+          });
+
+          const result = await response.json();
+          if (result.success) {
+            sessionStorage.clear();
+            window.location.href = "/login.html"; // Redirect to login page after success
+          } else {
+            messageDiv.innerText = result.message;
+          }
+        } catch (error) {
+          console.error("Error changing username:", error);
+          messageDiv.innerText = "An error occurred. Please try again.";
+        }
+      });
+
+      // Retrieve the username from sessionStorage
+      const username = decryptData(sessionStorage.getItem("username"));
+
+      if (!username) {
+        messageDiv.innerText =
+          "Error: No username found in session. Please log in.";
+        deleteAccountBtn.disabled = true; // Disable delete button if no username is found
+      }
+
+      // Delete Account
+      deleteAccountBtn.addEventListener("click", async () => {
+        const confirmDelete = confirm(
+          "Are you sure you want to delete your account?"
+        );
+        if (!confirmDelete) return;
+
+        try {
+          const response = await fetch("/delete-account", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username: username }), // Send the username directly from sessionStorage
+          });
+
+          const result = await response.json();
+          if (result.success) {
+            sessionStorage.clear(); // Clear sessionStorage on success
+            window.location.href = "/login.html"; // Redirect to login page after account deletion
+          } else {
+            messageDiv.innerText = result.message;
+          }
+        } catch (error) {
+          console.error("Error deleting account:", error);
+          messageDiv.innerText = "An error occurred. Please try again.";
+        }
+      });
+    </script>
+  </body>
+</html>

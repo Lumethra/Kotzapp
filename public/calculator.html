@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scientific Calculator</title>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://cdn.glitch.global/05a0f658-73c9-4927-9816-926caba90f4c/IMG_0843.jpeg?v=1729152770176"
+    />
+    <style>
+      body {
+        font-family: "Digital-7", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #1a1a2e;
+        overflow: hidden;
+        touch-action: manipulation;
+      }
+      .calculator {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        background-color: #ccc;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        width: 100%;
+      }
+      .calculator-screen {
+        font-family: "Digital-7", sans-serif;
+        width: 100%;
+        height: 60px;
+        border: none;
+        background-color: #303036;
+        color: #fff;
+        font-size: 40px;
+        text-align: right;
+        padding: 10px;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+        border-radius: 5px;
+      }
+      .calculator-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+      .calculator-buttons button {
+        width: 19%;
+        height: 60px;
+        margin: 5px 0;
+        font-size: 18px;
+        border: none;
+        border-radius: 5px;
+        background-color: #303036;
+        color: #fff;
+        transition: background-color 0.3s;
+      }
+      .calculator-buttons button:hover {
+        background-color: #555;
+      }
+      .calculator-buttons .operator {
+        background-color: #ff9500;
+        color: #fff;
+      }
+      .calculator-buttons .operator:hover {
+        background-color: #ff7f00;
+      }
+      .calculator-buttons .delete {
+        background-color: #ff0000;
+        color: #fff;
+      }
+      .calculator-buttons .delete:hover {
+        background-color: #d90000;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+      .material-icons {
+        font-size: 28px;
+        transition: color 0.3s;
+      }
+      .material-icons:hover {
+        color: #25d366;
+      }
+      .scrolling-line {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        animation: scroll 10s linear infinite;
+        z-index: -1;
+      }
+
+      .square {
+        width: 80px; /* Fixed width */
+        height: 80px; /* Fixed height to maintain square shape */
+        background: rgba(0, 255, 0, 0.1);
+        margin: 2px; /* Margin between squares */
+        box-shadow: 0px 0px 15px 5px rgba(0, 255, 0, 0.2);
+        animation: spin 3s linear infinite; /* Spinning effect */
+      }
+
+      @keyframes scroll {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(100vh); /* Scroll down to bottom */
+        }
+        100% {
+          transform: translateY(0); /* Scroll back up */
+        }
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      @font-face {
+        font-family: "Digital-7";
+        src: url("https://cdn.glitch.global/8421a94e-4cd3-463a-adb8-c198f2a6ff98/digital-7.ttf?v=1732611338709");
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scrolling-line" id="scrollingLine"></div>
+    <a
+      href="/index.html"
+      style="position: absolute; color: white; z-index: 100000000"
+    >
+      <span
+        class="material-icons"
+        style="position: fixed; top: 0; right: 0; margin: 20px"
+        >home</span
+      >
+    </a>
+    <a
+      href="#"
+      style="position: absolute; color: white; z-index: 100000000"
+      id="backBtn"
+    >
+      <span
+        class="material-icons"
+        style="position: fixed; top: 0; left: 0; margin: 20px"
+        >arrow_back</span
+      >
+    </a>
+    <div class="calculator">
+      <input
+        type="text"
+        class="calculator-screen"
+        id="calculator-screen"
+        disabled
+      />
+      <div class="calculator-buttons">
+        <!-- Row 1 -->
+        <button class="operator" value="(">(</button>
+        <button class="operator" value=")">)</button>
+        <button class="operator" value="²">x²</button>
+        <button class="operator" value="²√">²√x</button>
+        <button class="operator" value="clear">C</button>
+        <!-- Row 2 -->
+        <button class="operator" value="sin(">sin</button>
+        <button class="operator" value="cos(">cos</button>
+        <button class="operator" value="tan(">tan</button>
+        <button class="operator" value="log(">log</button>
+        <button class="operator" value="exp(">exp</button>
+        <!-- Row 3 -->
+        <button value="7">7</button>
+        <button value="8">8</button>
+        <button value="9">9</button>
+        <button class="operator" value="/">/</button>
+        <button class="operator" value="pi">π</button>
+        <!-- Row 4 -->
+        <button value="4">4</button>
+        <button value="5">5</button>
+        <button value="6">6</button>
+        <button class="operator" value="*">*</button>
+        <button class="operator" value="√">√</button>
+        <!-- Row 5 -->
+        <button value="1">1</button>
+        <button value="2">2</button>
+        <button value="3">3</button>
+        <button class="operator" value="-">-</button>
+        <button class="operator" value="^">xˣ</button>
+        <!-- Row 6 -->
+        <button value=".">.</button>
+        <button value="0">0</button>
+        <button class="delete" value="delete">DEL</button>
+        <button class="operator" value="+">+</button>
+        <button class="operator" value="=">=</button>
+      </div>
+    </div>
+    <script>
+      function decryptData(encryptedData) {
+        try {
+          // Basic validation check
+          if (!encryptedData || typeof encryptedData !== "string") {
+            throw new Error("Invalid encrypted data format");
+          }
+          return JSON.parse(atob(encryptedData)); // Decode from base64, then parse JSON
+        } catch (error) {
+          console.error("Error decrypting data:", error);
+          return null;
+        }
+      }
+
+      const username = decryptData(sessionStorage.getItem("username"));
+      const role = decryptData(sessionStorage.getItem("role")); // Get the role from sessionStorage
+
+      window.onload = () => {
+        if (role === "banned") {
+          window.location.href = "/banned.html";
+        }
+      };
+      if (role === "banned") {
+        window.location.href = "/banned.html";
+      }
+      document
+        .getElementById("backBtn")
+        .addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent the default anchor behavior
+          window.history.back(); // Go back to the last visited page
+        });
+
+      const scrollingLine = document.getElementById("scrollingLine");
+
+      function createSquares() {
+        const squareSize = 82; // 80px for the square + 2px margin
+        const numberOfSquares = Math.floor(window.innerWidth / squareSize); // Calculate how many squares fit in the viewport
+        scrollingLine.innerHTML = ""; // Clear existing squares
+
+        for (let i = 0; i < numberOfSquares; i++) {
+          // Create squares to fill the width
+          const square = document.createElement("div");
+          square.classList.add("square");
+          scrollingLine.appendChild(square);
+        }
+      }
+
+      // Recreate squares on window resize
+      window.addEventListener("resize", createSquares);
+
+      // Initial square creation
+      createSquares();
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const screen = document.getElementById("calculator-screen");
+        const buttons = document.querySelectorAll(".calculator-buttons button");
+
+        buttons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            const value = this.value;
+
+            if (value === "clear") {
+              screen.value = "";
+            } else if (value === "=") {
+              try {
+                let expression = screen.value
+                  // Handle nth root (2√, 3√, etc.)
+                  .replace(/(\d+)√(\d+)/g, (match, num, x) => {
+                    // For square root (2√)
+                    if (num === "2") {
+                      return `Math.sqrt(${x})`;
+                    }
+                    // For cube root (3√)
+                    else if (num === "3") {
+                      return `Math.cbrt(${x})`;
+                    }
+                    // For nth root (4√, 5√, etc.)
+                    else {
+                      return `Math.pow(${x}, 1/${num})`;
+                    }
+                  })
+                  // Handle exponentiation (n ^ n) as base ** exponent
+                  .replace(/(\d+)\^(\d+)/g, (match, base, exponent) => {
+                    return `${base}**${exponent}`;
+                  })
+                  .replace("²√", "Math.sqrt")
+                  .replace("²", "**2")
+                  .replace("π", "Math.PI")
+                  .replace("sin", "Math.sin")
+                  .replace("cos", "Math.cos")
+                  .replace("tan", "Math.tan")
+                  .replace("log", "Math.log10")
+                  .replace("exp", "Math.exp");
+
+                expression = expression.replace(/Math\.sqrt(\d+)/, "Math.sqrt($1)");
+                
+                // Now evaluate the expression
+                screen.value = eval(expression);
+              } catch (error) {
+                screen.value = "Error";
+              }
+            } else if (value === "delete") {
+              screen.value = screen.value.slice(0, -1); // Delete the last character
+            } else {
+              screen.value += value; // Add value to screen when a button is clicked
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

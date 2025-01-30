@@ -1,0 +1,61 @@
+[
+  {
+    "lobby": "Public",
+    "active": true,
+    "status": "public",
+    "password": null,
+    "lobbyOwner": "",
+    "members": [
+      "admin",
+      "Nico",
+      "QuizzityMC"
+    ]
+  },
+  {
+    "lobby": "Announcements",
+    "active": true,
+    "status": "public",
+    "password": null,
+    "lobbyOwner": "",
+    "members": [
+      "QuizzityMC"
+    ]
+  },
+  {
+    "lobby": "Memes",
+    "active": true,
+    "status": "public",
+    "password": null,
+    "lobbyOwner": "",
+    "members": [
+      "Lennart",
+      "Julian",
+      "admin"
+    ]
+  },
+  {
+    "lobby": "Programming",
+    "active": true,
+    "status": "private",
+    "password": null,
+    "lobbyOwner": "Maximilian",
+    "members": [
+      "Maximilian",
+      "Leon",
+      "Nico",
+      "System"
+    ]
+  },
+  {
+    "lobby": "Glück-Projekt",
+    "active": true,
+    "status": "private",
+    "password": null,
+    "lobbyOwner": "Maximilian",
+    "members": [
+      "Lennart",
+      "Maximilian",
+      "Robin"
+    ]
+  }
+]

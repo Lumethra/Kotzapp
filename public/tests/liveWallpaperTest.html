@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <style>
+        body, html {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #chat {
+            position: relative;
+            height: 100vh;
+          width: 100vw;
+            z-index: 1;
+        }
+
+        .animated-background {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .background-selector {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .preview-thumbnail {
+            width: 160px;
+            height: 90px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .preview-thumbnail:hover {
+            transform: scale(1.05);
+            border-color: #fff;
+        }
+
+        #mainBackground {
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat">
+        <div class="animated-background">
+            <video id="mainBackground" autoplay loop muted playsinline>
+                <source src="https://motionbgs.com/dl/4k/1964" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="background-selector">
+            <div class="preview-thumbnail" data-video="https://motionbgs.com/dl/4k/1964">
+                <video autoplay loop muted playsinline>
+                    <source src="https://motionbgs.com/dl/4k/1964" type="video/mp4">
+                </video>
+            </div>
+            <div class="preview-thumbnail" data-video="https://motionbgs.com/dl/hd/2438">
+                <video autoplay loop muted playsinline>
+                    <source src="https://motionbgs.com/dl/hd/2438" type="video/mp4">
+                </video>
+            </div>
+          <div class="preview-thumbnail" data-video="https://motionbgs.com/dl/4k/3616">
+                <video autoplay loop muted playsinline>
+                    <source src="https://motionbgs.com/dl/4k/3616" type="video/mp4">
+                </video>
+            </div>
+          <div class="preview-thumbnail" data-video="https://motionbgs.com/dl/hd/3560">
+                <video autoplay loop muted playsinline>
+                    <source src="https://motionbgs.com/dl/hd/3560" type="video/mp4">
+                </video>
+            </div>
+          <div class="preview-thumbnail" data-video="https://motionbgs.com/dl/4k/4324">
+                <video autoplay loop muted playsinline>
+                    <source src="https://motionbgs.com/dl/4k/4324" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const Website = "https://motionbgs.com/";
+
+        const previews = document.querySelectorAll('.preview-thumbnail');
+        const mainBackground = document.getElementById('mainBackground');
+
+        previews.forEach(preview => {
+            preview.addEventListener('click', () => {
+                const videoUrl = preview.dataset.video;
+                mainBackground.src = videoUrl;
+                mainBackground.load();
+                mainBackground.play();
+            });
+        });
+    </script>
+</body>
+</html>

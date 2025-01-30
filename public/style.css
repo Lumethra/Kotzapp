@@ -1,0 +1,1377 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: rgba(7, 94, 84, 1);
+  color: #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+a {
+  text-decoration: none;
+}
+
+#status,
+#statuslobby {
+  font-size: 1.2em;
+  color: #2ecc71;
+  margin-bottom: 20px;
+}
+
+#statuslobby:hover {
+  cursor: pointer;
+}
+
+#status:hover {
+  cursor: default;
+}
+
+#count:hover {
+  cursor: default;
+}
+
+#clock:hover {
+  cursor: default;
+}
+
+button,
+nav ul li a,
+nav ul li button {
+  background-color: #2ecc71;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s;
+  text-decoration: none; /* No underline */
+  white-space: nowrap;
+}
+
+button:hover,
+nav ul li a:hover,
+nav ul li button:hover {
+  background-color: #27ae60;
+}
+
+#anotherContainer {
+  width: 100%;
+  max-width: 660px;
+  height: 540px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-radius: 20px;
+}
+
+#completeChat {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  flex: 1;
+}
+
+#main-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-radius: 20px;
+}
+
+#chat-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  position: absolute;
+  flex: 1;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+#burgerLabel:hover {
+  cursor: pointer;
+}
+
+#burger:not(:checked) + #burgerLabel .arrowBack,
+#burger:checked + #burgerLabel .arrowForward {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+#burger:checked + #burgerLabel .arrowBack,
+#burger:not(:checked) + #burgerLabel .arrowForward {
+  opacity: 1;
+  transition: opacity 4.5s;
+}
+
+#burger ~ #chat {
+  position: absolute;
+  flex: 1;
+  z-index: 9;
+  padding: 10px 5px 10px 15px;
+  border-radius: 20px;
+  width: 100%;
+  height: 100%;
+  background-color: #e0e0e0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: stretch;
+  align-self: center;
+  transition: transform 1s ease, padding 0.5s;
+  transition-delay: 0.5s;
+  transform: translateX(100%);
+}
+
+#burger ~ #chat > * {
+  transform: translateY(-40px);
+  opacity: 0;
+  transition: opacity 0.5s;
+  transition: 0.5s;
+  transition-delay: 0s;
+}
+
+#burger:checked ~ #chat {
+  transform: translateX(0);
+  transition-delay: 0s;
+}
+
+#burger:checked ~ #chat > * {
+  opacity: 1;
+  transition-delay: 0.5s;
+  transition: opacity 0.5s;
+}
+
+#burger:not(:checked) ~ #chat > * {
+  opacity: 0;
+  transition: opacity 0.5s;
+  transition-delay: 0.5s;
+}
+
+.more-link {
+  position: absolute;
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  color: white;
+  padding: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.more-link:hover {
+  color: green;
+}
+
+.leaveLobbyButton {
+  position: absolute;
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  color: white;
+  padding: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.leaveLobbyButton:hover {
+  color: red;
+}
+
+#moreMenu {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+#lobbyOwnerSelection {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+#lobbyOwnerSelection > button {
+  border-radius: 10px;
+  margin: 10px;
+}
+
+#MessageSend {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  max-height: 40px;
+  background-color: rgba(0, 0, 0, 0.4);
+  margin-top: -40px;
+  z-index: 10;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+#message {
+  padding: 9px 8px 8px 15px;
+  border-radius: 20px;
+  font-size: 1em;
+  margin: 5px;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #e0e0e0;
+  border: 2px solid #075e54;
+  width: calc(100% - 40px - 40px);
+  height: 100%;
+  caret-color: ##cddfdd;
+}
+
+#message:focus {
+  border: 2px solid #2ecc71;
+  outline: none;
+}
+
+#send {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  max-width: 40px;
+}
+
+#sendImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  max-width: 40px;
+}
+
+#burgerHelper ~ #MessageSend {
+  transition: transform 1s ease, padding 0.5s;
+  transition-delay: 0.5s;
+  transform: translateX(100%);
+}
+
+#burgerHelper:checked ~ #MessageSend {
+  transform: translateX(0);
+  opacity: 1;
+  transition-delay: 0s;
+}
+
+#currentUserDisplay {
+  align-self: center;
+  position: absolute;
+  z-index: 10;
+  margin: 13px;
+  mix-blend-mode: difference;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#span-container {
+  mix-blend-mode: difference;
+  position: absolute;
+  width: 19px;
+  height: 18px;
+  left: 0;
+  z-index: 15;
+  transform: translate(10px, 10px);
+}
+
+.lobby-selection {
+  background: #c2c2c2;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 8;
+  border-radius: 20px;
+  transition-delay: 0s;
+  overflow: scroll;
+  display: flex;
+  justify-content: center;
+  padding: 50px 30px 30px 30px;
+  transition: background 0.5s ease, transform 0.5s ease;
+}
+
+
+.lobby-selection:hover {
+  transform: scale(1.02);
+}
+
+.lobby-selection > ul {
+  text-align: center;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 800px;
+}
+
+.lobby-selection > ul > li {
+  margin: 10px 0;
+  padding: 20px 20px 20px 40px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #333333;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  transition: background 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.lobby-selection > ul > li:hover {
+  background: rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.lobby-option {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.LobbyName {
+  color: #ffffff;
+}
+
+.lobby-icon {
+  font-size: 24px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+#lobby-selection li:hover {
+  background-color: rgba(0, 0, 0, 0.5); /* Darker background on hover */
+  cursor: pointer;
+}
+
+.createLobbyLi {
+  align-items: center;
+}
+
+#burger:checked ~ .lobby-selection {
+  opacity: 0;
+  pointer-events: none;
+  transition-delay: 0.25s;
+}
+
+#burger:not(:checked) ~ .lobby-selection {
+  opacity: 1;
+  pointer-events: auto;
+  transition-delay: 0.5s;
+}
+
+/* Container for all messages */
+.message-container {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  margin-top: 10px; /* Margin between message containers */
+  max-width: 70%; /* Limit width of messages */
+  position: relative; /* Relative positioning for the container */
+}
+
+.date-separator {
+  display: inline-block;
+  margin: 20px;
+  text-align: center;
+  font-weight: bolder;
+  padding: 5px 0;
+  color: #666; /* Adjust color as needed */
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  width: 40%;
+  max-width: 40%;
+  min-width: 20%;
+  color: #333;
+  padding: 5px;
+  align-self: center;
+  font-family: "Digital-7", sans-serif;
+}
+
+#sticky-date-container {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  width: 20%;
+  text-align: center;
+  font-weight: bolder;
+  margin-top: 10px;
+  padding: 5px;
+  color: #333;
+  z-index: 10;
+  visibility: hidden; /* Initially hidden */
+  align-self: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  font-family: "Digital-7", sans-serif;
+}
+
+#sticky-date-container.visible {
+  visibility: visible; /* Show when there's a date to display */
+}
+
+#sticky-date-container.active {
+  opacity: 1;
+}
+
+#message-text:hover {
+  cursor: pointer;
+}
+
+.message-text {
+  display: inline-block;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  cursor: pointer;
+}
+
+.message {
+  display: flex;
+  justify-content: flex-start;
+  padding: 5px;
+  margin: 5px;
+}
+
+.message-menu {
+  position: absolute;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  z-index: 11;
+  margin-top: 5px;
+  white-space: nowrap;
+}
+
+.menu-option {
+  border-radius: 5px;
+  color: #cddfdd;
+}
+
+.message-menu .menu-option {
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+#deleteMessage {
+  color: #e41c0c;
+}
+
+#editMessage {
+  color: #ff8800;
+}
+
+#replyMessage {
+  color: #2ecc71;
+}
+
+.message-menu .menu-option:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.blur {
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+.selected-message-container {
+  position: fixed;
+  z-index: 10;
+  white-space: nowrap;
+  padding-right: 10px;
+}
+
+/* Username styling */
+.username {
+  font-weight: bold; /* Bold for username */
+  font-size: 0.85em; /* Font size for username */
+  margin-bottom: 2px; /* Space between username and message */
+  color: #075e54; /* WhatsApp-like color */
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8), 0px 0px 6px rgba(0, 0, 0, 0.8); /* Stronger shadow for contrast */
+}
+
+.message-container .username {
+  display: block;
+}
+
+.message-container.same-user {
+  margin-top: 1px;
+}
+
+.message-container.same-user .username {
+  display: none;
+}
+
+/* Styles for messages from the current user */
+.you {
+  align-self: flex-end; /* Align current user's messages to the right */
+}
+
+/* Styles for messages from other users */
+.others {
+  align-self: flex-start;
+}
+
+.message-bubble {
+  position: relative; /* Enables positioning of child elements */
+  display: inline-block; /* Allow text wrapping within the bubble */
+  padding: 8px 12px; /* Original padding */
+  padding-right: 40px; /* Additional padding on the right to create space for the timestamp */
+  border-radius: 8px; /* Rounded corners for the bubble */
+  font-size: 1em; /* Font size for the message */
+  line-height: 1.3; /* Line height for better readability */
+  word-wrap: break-word; /* Break words if necessary */
+  max-width: 100%; /* Ensures the bubble does not exceed container */
+  white-space: pre-wrap; /* Preserve whitespace */
+  margin-bottom: 2px; /* Space between message bubble and next message */
+}
+
+.message-bubble:hover {
+  cursor: pointer;
+}
+
+.selected-message-container {
+  max-width: 68%;
+}
+
+.uploaded-image {
+  max-width: 100%; /* To keep images within the chat bubble width */
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+/* Bubble color for current user */
+.you .message-bubble {
+  background-color: #dcf8c6; /* Light green */
+  color: #000000;
+}
+
+/* Bubble color for other users */
+.others .message-bubble {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #dddddd;
+}
+
+.timestamp {
+  font-size: 0.65em; /* Smaller font for the timestamp */
+  color: #888888; /* Grey color for the timestamp */
+  position: absolute; /* Positioning relative to the message bubble */
+  bottom: 4px; /* Distance from the bottom of the bubble */
+  right: 8px; /* Distance from the right of the bubble */
+  text-align: right; /* Align text to the right */
+  font-family: "Digital-7", sans-serif;
+}
+
+nav {
+  display: flex; /* Ensure nav is flex */
+  justify-content: center; /* Center nav items */
+  align-items: center; /* Center items vertically */
+  width: 100%;
+  background-color: #333;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 10001;
+}
+
+nav ul {
+  list-style: none; /* Remove bullet points */
+  display: flex; /* Use flexbox for alignment */
+  justify-content: center; /* Center items */
+  align-items: center; /* Center items vertically */
+  gap: 20px; /* Space between items */
+  padding: 0; /* Remove padding */
+}
+
+#clock,
+#count {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 25px;
+  font-weight: bolder;
+  color: #2ecc71;
+}
+
+.icon-container {
+  display: flex; /* Use flexbox to arrange items in a row */
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically */
+  gap: 15px; /* Space between icons */
+}
+
+.icon {
+  display: flex; /* Enables flexbox for centering */
+  align-items: center; /* Centers content vertically */
+  justify-content: center; /* Centers content horizontally */
+  width: 40px; /* Width for the icon container */
+  height: 40px; /* Height for the icon container */
+  background-color: rgba(0, 0, 0, 0.5); /* Default background color (dark) */
+  color: white; /* Icon color */
+  border-radius: 50%; /* Make icons circular */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Add subtle shadow for depth */
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Add transitions for effects */
+}
+
+.icon .material-symbols-outlined {
+  font-size: 24px; /* Ensure the icon has a consistent size */
+  line-height: 40px; /* Vertically center the icon within the button */
+}
+
+.icon:hover {
+  background-color: #2ecc71; /* Change background color on hover */
+  transform: scale(1.2); /* Slightly enlarge on hover */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Increase shadow on hover */
+}
+
+.material-symbols-outlined {
+  font-size: 24px; /* Set icon size */
+  transition: transform 0.3s; /* Add transition to icon */
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white; /* Icon color */
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Add transitions for effects */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Add subtle shadow for depth */
+}
+
+.nav:hover {
+  background-color: #2ecc71; /* Change background color on hover */
+  transform: scale(1.2); /* Slightly enlarge on hover */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Increase shadow on hover */
+  transform: scale(1.2); /* Enlarge icon on hover */
+}
+
+.tooltip {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  display: none; /* Hidden by default */
+  pointer-events: none; /* Prevent tooltip from blocking hover events */
+  transition: opacity 0.3s; /* Smooth appearance */
+  z-index: 1000000; /* Make sure it appears above other elements */
+}
+
+/* Style for toggle switch */
+.toggle-switch {
+  position: absolute;
+  width: 40px;
+  height: 19px;
+  display: inline-block;
+  z-index: 11;
+  align-self: flex-end;
+  transform: translate(-10px, 10px);
+}
+
+.toggle-checkbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 19px; /* Set to match the height for a pill shape */
+  cursor: pointer;
+  transition: background-color 0.3s;
+  background-color: #a31010;
+}
+
+.toggle-label::before {
+  content: "";
+  position: absolute;
+  width: 17px; /* Adjusted to fit inside the toggle switch */
+  height: 17px; /* Slightly smaller than height for padding */
+  left: 1px;
+  bottom: 1px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+/* When checked, change background and move the toggle */
+.toggle-checkbox:checked + .toggle-label {
+  background-color: #10a37f;
+}
+
+.toggle-checkbox:checked + .toggle-label::before {
+  transform: translateX(21px); /* Adjusted to fit toggle width */
+}
+
+#statusText {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  display: inline-block;
+  padding: 5px;
+  font-size: 14px;
+  color: #333;
+  z-index: 10;
+  align-self: flex-end;
+  background-color: #d3d3d3;
+  border-radius: 5px;
+  width: fit-content; /* Adjust width exactly to text content */
+  max-width: 100%; /* Prevents it from expanding if there's unexpected long text */
+  white-space: nowrap; /* Prevents text wrapping */
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow */
+  transform: translate(-60px, 7px);
+}
+
+#statusText.fade-in {
+  opacity: 1;
+}
+
+#menuButton {
+  display: flex; /* Enables flexbox for centering */
+  align-items: center; /* Centers content vertically */
+  justify-content: center; /* Centers content horizontally */
+  background-color: rgba(0, 0, 0, 0.5); /* Default background color (dark) */
+  color: white; /* Icon color */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Add subtle shadow for depth */
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Add transitions for effects */
+  display: none; /* Hide button by default */
+  z-index: 20;
+}
+
+#menuButton:hover {
+  background-color: #2ecc71; /* Change background color on hover */
+  transform: scale(1.2); /* Slightly enlarge on hover */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Increase shadow on hover */
+  transform: scale(1.2); /* Enlarge icon on hover */
+}
+
+.mobile-menu {
+  transform: translateY(-100%); /* Start hidden above the screen */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent background */
+  z-index: 1000; /* Ensure it appears above other elements */
+  flex-direction: column;
+  align-items: center; /* Center the icons horizontally */
+  justify-content: center; /* Center the icons vertically */
+  transition: opacity 0.5s ease; /* Smooth fade-in effect */
+  opacity: 0; /* Start invisible */
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Slide-up animation */
+@keyframes slideUp {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+/* Apply the animations based on the .show class */
+.mobile-menu.show {
+  animation: slideDown 0.5s forwards;
+  display: flex; /* Use flexbox for alignment */
+  flex-direction: column;
+  opacity: 1; /* Fade in */
+}
+
+.mobile-menu.show .icon {
+  margin: 10px;
+}
+
+.mobile-menu.hide {
+  animation: slideUp 0.5s forwards;
+  display: flex; /* Use flexbox for alignment */
+  flex-direction: column;
+}
+
+.icon-mobile {
+  width: 120px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+#mobile-nav {
+  display: none;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 999999;
+}
+
+#rulesBackground {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-width: 100vh;
+  background-color: #000000;
+  font-family: Arial, sans-serif;
+  color: #00ff00;
+  overflow: hidden;
+  z-index: 1001;
+  align-self: center;
+}
+
+.rules-container {
+  position: relative;
+  background: rgba(0, 0, 0, 0.9);
+  padding: 30px;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px 2px rgba(0, 255, 0, 0.5);
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.rule {
+  margin-bottom: 20px;
+  width: 100%;
+  display: none; /* Hide rules initially */
+}
+
+.rule.visible {
+  display: block; /* Show only the current rule */
+}
+
+.rulesInput {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+  border: 1px solid #00ff00;
+  border-radius: 5px;
+  background: #000000;
+  color: #00ff00;
+}
+
+.rulesInput:focus {
+  outline: none;
+  border-color: #00ff00;
+  box-shadow: 0px 0px 10px rgba(0, 255, 0, 0.7);
+}
+
+#kickCountdown {
+  margin-top: 10px;
+  color: #4caf50;
+}
+
+.rulesContent {
+  width: 100%;
+}
+
+/* General Modal Styles */
+.modal {
+  display: none; /* Initially hidden */
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal Content Box */
+.modal-content {
+  position: relative;
+  background-color: #2e2e2e; /* Dark Mode */
+  color: white;
+  padding: 25px 20px 30px 20px;
+  border-radius: 10px;
+  width: 360px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Close Button */
+.close-modal {
+  position: absolute;
+  top: 7px;
+  right: 12px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-modal:hover {
+  color: #ff4d4d; /* Highlight on hover */
+}
+
+/* Modal Header */
+.modal-content h2 {
+  margin: 0 0 5px 0;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.modal-content h2 .material-symbols-outlined {
+  font-size: 28px;
+  margin-right: 8px;
+}
+
+/* Input Field */
+.lobby-input {
+  width: 75%;
+  padding: 12px;
+  margin-top: 20px;
+  border-radius: 5px;
+  border: 1px solid #4d4d4d;
+  background-color: #333333;
+  color: white;
+  font-size: 16px;
+  outline: none;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.lobby-input::placeholder {
+  color: #aaaaaa; /* Placeholder text color */
+}
+
+.password-toggle {
+  margin-top: 20px;
+}
+
+/* Create Button */
+.create-button {
+  padding: 12px 20px;
+  margin-top: 20px;
+  background-color: #00b300;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 75%;
+}
+
+.create-button:hover {
+  background-color: #009900;
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+.create-button .material-symbols-outlined {
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+/* Box Shadow on Focus */
+.lobby-input:focus {
+  border-color: #00b300;
+  box-shadow: 0 0 5px rgba(0, 179, 0, 0.7);
+}
+
+/* ---------------------------------- settings ---------------------------------- */
+
+/* Keyframes for sliding and fading in */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Keyframes for sliding and fading out */
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+}
+
+/* Left panel hidden by default */
+#leftPanel {
+  display: none; /* Initially hidden */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 410px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  color: white;
+  font-size: 14px;
+  z-index: 1;
+  opacity: 0; /* Initially transparent */
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Class to show the panel */
+#leftPanel.active {
+  display: flex;
+  animation: slideIn 0.4s forwards; /* Slide and fade in */
+}
+
+/* Class to hide the panel */
+#leftPanel.inactive {
+  animation: slideOut 0.4s forwards; /* Slide and fade out */
+  opacity: 0; /* Start fading out */
+  transform: translateX(-20px); /* Slide out */
+}
+
+.settings-container {
+  width: 100%;
+  height: 600px;
+  margin: 0 auto;
+  background-color: rgba(2, 28, 27, 0.8); /* Dark Mode */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow-y: scroll;
+}
+.input-group {
+  margin-bottom: 30px;
+}
+.input-group select {
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(2, 28, 27, 0.8);
+  border: 1px solid #4d4d4d;
+  border-radius: 5px;
+  color: #ffffff;
+}
+.input-group:hover > * {
+  cursor: pointer;
+}
+/* Light Mode Styles */
+.light-mode {
+  background-color: rgba(7, 94, 84, 0.2);
+}
+.light-mode #status,
+.light-mode #statuslobby {
+  color: rgba(2, 28, 27, 0.8);
+}
+.light-mode nav {
+  background-color: rgba(2, 28, 27, 0.6);
+}
+.light-mode .tooltip {
+  background-color: rgba(2, 28, 27, 0.8);
+}
+.light-mode .settings-container {
+  background-color: rgba(7, 94, 84, 0.5);
+}
+.light-mode .input-group select {
+  background-color: rgba(7, 94, 84, 0.2);
+}
+.light-mode #MessageSend #message {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 2px solid #cddfdd;
+}
+.light-mode #MessageSend #message:focus {
+  border: 2px solid #2ecc71;
+  outline: none;
+}
+#themesel {
+  font-weight: bolder;
+  text-size: 2em;
+  margin: 10px;
+}
+#span-container-settings {
+  mix-blend-mode: difference;
+  position: absolute;
+  width: 19px;
+  height: 18px;
+  z-index: 15;
+  right: 0;
+  transform: translate(-25px, -10px);
+}
+
+#span-container-settings:hover {
+  cursor: pointer;
+}
+
+/* Style for background selection gallery */
+#background-selector {
+  margin-bottom: 30px;
+  max-height: 280px;
+  overflow-y: scroll;
+}
+
+/* Style for each thumbnail */
+.thumbnail {
+  width: calc(100% - 20px);
+  aspect-ratio: 2 / 1;
+  margin: 0 10px 10px 10px;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  transition: border 0.2s;
+}
+
+.thumbnail:hover {
+  border: 2px solid #007bff; /* Highlight on hover */
+}
+
+#burger-settings + label span {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  top: 0;
+  margin-top: -1px;
+  left: 0;
+  display: block;
+  background: white;
+  transition: 0.5s;
+}
+
+#burger-settings + label span:first-child {
+  top: 3px;
+}
+
+#burger-settings + label span:nth-child(2) {
+  top: 8px;
+}
+
+#burger-settings + label span:last-child {
+  top: 13px;
+}
+
+#burger-settings:hover {
+  cursor: pointer;
+}
+
+#burger-settings:not(:checked) + label span {
+  background: white;
+}
+
+#burger-settings:checked + label span {
+  background: white;
+  opacity: 0;
+  top: 50%;
+}
+
+#burger-settings:checked + label span:first-child {
+  opacity: 1;
+  transform: rotate(405deg);
+}
+
+#burger-settings:checked + label span:last-child {
+  opacity: 1;
+  transform: rotate(-405deg);
+}
+
+/* Scrollbar Styling */
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+  background: none;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: darkgray;
+  border-radius: 50px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: black;
+}
+
+/* Scrollbar Styling */
+#chat::-webkit-scrollbar {
+  width: 10px;
+}
+
+#chat::-webkit-scrollbar-track {
+  background: none;
+}
+
+#chat::-webkit-scrollbar-thumb {
+  visibility: hidden;
+  background: darkgray;
+  border-radius: 50px;
+}
+
+#chat.chatScroll::-webkit-scrollbar-thumb {
+  visibility: visible;
+}
+
+#background-selector::-webkit-scrollbar {
+  display: none;
+}
+
+.lobby-selection::-webkit-scrollbar {
+  display: none;
+}
+
+.settings-container::-webkit-scrollbar {
+  display: none;
+}
+
+@-moz-document url-prefix() {
+  #chat {
+    scrollbar-width: none;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  #clock,
+  #count {
+    display: none;
+  }
+
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
+  .modal-content {
+    width: 80%; /* Adjust width for smaller screens */
+  }
+}
+
+@media (max-width: 620px) {
+  #main-container {
+    max-width: 100%;
+  }
+
+  #chat-container {
+    max-width: 100%;
+  }
+
+  #chat {
+    width: 100%;
+  }
+
+  #lobby-selection {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+@media (max-width: 450px) {
+  nav {
+    display: none;
+  }
+  .icon-container {
+    display: none; /* Hide icons */
+  }
+  #mobile-nav {
+    display: block;
+  }
+  #menuButton {
+    display: block; /* Show the MENU button */
+    margin-left: 10px; /* Add margin for spacing */
+    margin-right: 10px; /* Add margin for spacing */
+  }
+}
+
+@media (max-width: 420px) {
+  #MessageSend {
+    width: 100%;
+  }
+}
+
+@media (max-width: 410px) {
+  #leftPanel {
+    width: 100%;
+  }
+}
+
+@font-face {
+  font-family: "Digital-7";
+  src: url("https://cdn.glitch.global/8421a94e-4cd3-463a-adb8-c198f2a6ff98/digital-7.ttf?v=1732611338709");
+}
