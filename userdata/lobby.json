@@ -8,7 +8,19 @@
     "members": [
       "admin",
       "Nico",
-      "QuizzityMC"
+      "QuizzityMC",
+      "asdasdasd",
+      "khaki",
+      "idontknowwha",
+      "Lennart",
+      "BGM",
+      "Bennet-T",
+      "Bennetfreund",
+      "aaa",
+      "Nico2",
+      "Maxibus",
+      "adhyys",
+      "Chroma"
     ]
   },
   {
@@ -18,7 +30,11 @@
     "password": null,
     "lobbyOwner": "",
     "members": [
-      "QuizzityMC"
+      "QuizzityMC",
+      "BGM",
+      "Bennet-T",
+      "aaa",
+      "adhyys"
     ]
   },
   {
@@ -30,7 +46,10 @@
     "members": [
       "Lennart",
       "Julian",
-      "admin"
+      "admin",
+      "BGM",
+      "Bennet-T",
+      "Bennetfreund"
     ]
   },
   {
@@ -56,6 +75,19 @@
       "Lennart",
       "Maximilian",
       "Robin"
+    ]
+  },
+  {
+    "lobby": "DevTalk",
+    "active": false,
+    "status": "private",
+    "password": "dev",
+    "lobbyOwner": "Nico",
+    "members": [
+      "Nico",
+      "Leon",
+      "System",
+      "Maximilian"
     ]
   }
 ]

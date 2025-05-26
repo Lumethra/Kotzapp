@@ -1,14 +1,5 @@
 [
   {
-    "username": "Maximilian",
-    "theme": true,
-    "notifications": true,
-    "randomBackground": false,
-    "autoJoin": false,
-    "currentBackgroundId": 6,
-    "hideOwner": false
-  },
-  {
     "username": "Leon",
     "theme": true,
     "notifications": true,
@@ -18,29 +9,12 @@
     "hideOwner": false
   },
   {
-    "username": "root",
+    "username": "Bennetfreund",
     "theme": true,
     "notifications": true,
     "randomBackground": true,
     "autoJoin": false,
-    "currentBackgroundId": 19,
-    "hideOwner": false
-  },
-  {
-    "username": "admin",
-    "theme": true,
-    "notifications": true,
-    "randomBackground": true,
-    "autoJoin": false,
-    "currentBackgroundId": 15
-  },
-  {
-    "username": "Nico",
-    "theme": true,
-    "notifications": true,
-    "randomBackground": true,
-    "autoJoin": false,
-    "currentBackgroundId": 1
+    "currentBackgroundId": 14
   },
   {
     "username": "Lennart",
@@ -48,14 +22,80 @@
     "notifications": true,
     "randomBackground": true,
     "autoJoin": false,
-    "currentBackgroundId": 4
+    "currentBackgroundId": 19
   },
   {
-    "username": "QuizzityMC",
+    "username": "Nico",
+    "theme": true,
+    "notifications": true,
+    "randomBackground": true,
+    "autoJoin": true,
+    "currentBackgroundId": 9
+  },
+  {
+    "username": "Nico2",
     "theme": true,
     "notifications": true,
     "randomBackground": true,
     "autoJoin": false,
-    "currentBackgroundId": 10
+    "currentBackgroundId": 14
+  },
+  {
+    "username": "Maxibus",
+    "theme": true,
+    "notifications": true,
+    "randomBackground": true,
+    "autoJoin": false,
+    "currentBackgroundId": 20
+  },
+  {
+    "username": "Mitchell",
+    "theme": true,
+    "notifications": true,
+    "randomBackground": true,
+    "autoJoin": false,
+    "currentBackgroundId": 1
+  },
+  {
+    "username": "Maximilian",
+    "theme": true,
+    "notifications": true,
+    "randomBackground": true,
+    "autoJoin": false,
+    "currentBackgroundId": 20,
+    "hideOwner": false
+  },
+  {
+    "username": "adhyys",
+    "theme": true,
+    "notifications": true,
+    "randomBackground": true,
+    "autoJoin": false,
+    "currentBackgroundId": 17
+  },
+  {
+    "username": "root",
+    "theme": true,
+    "notifications": true,
+    "randomBackground": true,
+    "autoJoin": false,
+    "currentBackgroundId": 8,
+    "hideOwner": false
+  },
+  {
+    "username": "Chroma",
+    "theme": true,
+    "notifications": true,
+    "randomBackground": true,
+    "autoJoin": false,
+    "currentBackgroundId": 8
+  },
+  {
+    "username": null,
+    "theme": true,
+    "notifications": false,
+    "randomBackground": false,
+    "autoJoin": true,
+    "currentBackgroundId": 1
   }
 ]
